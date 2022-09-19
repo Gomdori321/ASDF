@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LostArk</title>
+
+    <!-- ress css -->
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+
+    <!-- 구글 폰트 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+
+    <style>
+        /* 초기화 코드 */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: sans-serif;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            border: 0;
+        }
+
+        /* header */
+        #main_header {
+            /* 중앙 정렬 */
+            width: 960px;
+            margin: 0 auto;
+
+            /* 절대 좌표 */
+            height: 160px;
+            position: relative;
+            /* 자식 태그가 absoulte이면 부모 태그에 position: relative; */
+        }
+
+        /* header의 자식 태그 */
+        #main_header>#title {
+            position: absolute;
+            left: 20px;
+            top: 30px;
+        }
+
+        #main_header>#main_gnb {
+            position: absolute;
+            right: 0px;
+            top: 5px;
+        }
+
+        #main_header>#main_lnb {
+            position: absolute;
+            right: 0px;
+            bottom: 10px;
+        }
+
+        /* title 폰트 */
+        #title {
+            font-family: 'Anton', sans-serif;
+            font-size: 30px;
+            color: orange;
+            /* 행간 조절 */
+            line-height: 50px;
+        }
+
+        /* 메뉴 수평 */
+        #main_gnb>ul {
+            overflow: hidden;
+        }
+
+        /* {overflow: hidden;} : 자손에 {float: left;}를 적용해서 */
+        #main_gnb>ul>li {
+            float: left;
+        }
+
+        #main_gnb>ul>li>a {
+            /* 메뉴 모양 */
+            display: block;
+            padding: 2px 10px;
+            border: 1px solid #1b1b19;
+        }
+
+        /* 메뉴 스타일 */
+        #main_gnb>ul>li>a:hover {
+            background: #ffffff;
+            color: rgb(10, 9, 9);
+        }
+
+        /* border-radius : 테두리 모서리 둥글게 */
+        #main_gnb>ul>li:first-child>a {
+            border-radius: 10px 0 0 10px;
+        }
+
+        #main_gnb>ul>li:last-child>a {
+            border-radius: 0 10px 10px 0;
+        }
+
+        /* 메뉴 수평 */
+        #main_lnb>ul {
+            overflow: hidden;
+        }
+
+        /* {overflow: hidden;} : 자손에 {float: left;}를 적용해서 */
+        #main_lnb>ul>li {
+            float: left;
+        }
+
+        #main_lnb>ul>li>a {
+            /* 메뉴 모양 */
+            display: block;
+            padding: 5px 10px;
+            border: 1px solid #11100f;
+            color: rgb(14, 10, 10);
+        }
+
+        /* 메뉴 스타일 */
+        #main_lnb>ul>li>a:hover {
+            background: #ffffff;
+            color: black;
+        }
+
+        /* border-radius : 테두리 모서리 둥글게 */
+        #main_lnb>ul>li:first-child>a {
+            border-radius: 10px 0 0 10px;
+        }
+
+        #main_lnb>ul>li:last-child>a {
+            border-radius: 0 10px 10px 0;
+        }
+
+        /* 폰트 */
+        #main_gnb {
+            font-size: 20px;
+        }
+
+        #main_lnb {
+            font-size: 20px;
+        }
+
+        /* content */
+        #content {
+            /* 중앙 정렬 */
+            width: 960px;
+            margin: 0 auto;
+
+            /* 수평 정렬 */
+            overflow: hidden;
+        }
+
+        /* content 내부 레이아웃 */
+        #content>#main_section {
+            width: 750px;
+            float: left;
+        }
+
+        #content>#main_aside {
+            width: 200px;
+            float: right;
+        }
+
+        /* 본문 */
+        #main_section>article.main_article {
+            margin-bottom: 10px;
+            padding: 20px;
+            border: 2px solid #1f1d19;
+        }
+
+        /* 탭바 스타일 */
+        input:nth-last-of-type(1) {
+            display: none;
+        }
+
+        input:nth-of-type(1)~div:nth-of-type(1) {
+            display: none;
+        }
+
+        input:nth-of-type(1):checked~div:nth-of-type(1) {
+            display: block;
+        }
+
+        input:nth-last-of-type(2) {
+            display: none;
+        }
+
+        input:nth-of-type(2)~div:nth-of-type(2) {
+            display: none;
+        }
+
+        input:nth-of-type(2):checked~div:nth-of-type(2) {
+            display: block;
+        }
+
+        /* 탭 모양 */
+        section.buttons {
+            overflow: hidden;
+        }
+
+        section.buttons>label {
+            /* 수평 정렬 */
+            display: block;
+            float: left;
+            /* 폰트 */
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            /* 테두리 */
+            box-sizing: border-box;
+            border: 2px solid #14130e;
+            /* 색상 */
+            background: #F2BA22;
+            color: rgb(255, 255, 255);
+        }
+
+        input:nth-of-type(1):checked~section.buttons>label:nth-of-type(1) {
+            text-align: center;
+            background-color: #14120d;
+            color: white;
+        }
+
+        input:nth-of-type(2):checked~section.buttons>label:nth-of-type(2) {
+            text-align: center;
+            background-color: #0e0d0b;
+            color: white;
+        }
+
+        /* 목록 */
+        .item {
+            overflow: hidden;
+            padding: 10px;
+            border: 2px solid #161208;
+            border-top: none;
+        }
+
+        .thumbnail {
+            float: left;
+        }
+
+        .description {
+            float: left;
+            margin-left: 10px;
+            color: rgb(255, 235, 235);
+        }
+
+        /* 목록 안 긴 글자 생략 */
+        .description>strong {
+            display: block;
+            width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* footer */
+        #main_footer {
+            /* 중앙 정렬 */
+            width: 960px;
+            margin: 0 auto;
+            /* 테두리 */
+            box-sizing: border-box;
+            padding: 10px;
+            border: 5px solid #1b1b06;
+
+            /* 글자 정렬 */
+            text-align: center;
+        }
+
+        body {
+            /* 본문 스타일 */
+            font-family: 'Noto Sans JP', sans-serif;
+            background-image: url('banner.jpg');
+            background-size: 100%;
+            background-position: top center;
+            background-attachment: fixed;
+            color: black;
+        }
+
+        /* 슬라이드 코드 출처 : https://kutar37.tistory.com/entry/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C%EC%87%BC-%EA%B5%AC%ED%98%84-cssjavascriptjquery */
+
+        @import url(https://fonts.googleapis.com/css?family=Varela+Round);
+      
+        .slides {
+            padding: 0;
+            width: 609px;
+            height: 420px;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .slides * {
+            user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        .slides input {
+            display: none;
+        }
+
+        .slide-container {
+            display: block;
+        }
+
+        .slide {
+            top: 0;
+            opacity: 0;
+            width: 609px;
+            height: 420px;
+            display: block;
+            position: absolute;
+
+            transform: scale(0);
+
+            transition: all .7s ease-in-out;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .nav label {
+            width: 200px;
+            height: 100%;
+            display: none;
+            position: absolute;
+
+            opacity: 0;
+            z-index: 9;
+            cursor: pointer;
+
+            transition: opacity .2s;
+
+            color: #FFF;
+            font-size: 156pt;
+            text-align: center;
+            line-height: 380px;
+            font-family: "Varela Round", sans-serif;
+            background-color: rgba(255, 255, 255, .3);
+            text-shadow: 0px 0px 15px rgb(119, 119, 119);
+        }
+
+        .slide:hover+.nav label {
+            opacity: 0.5;
+        }
+
+        .nav label:hover {
+            opacity: 1;
+        }
+
+        .nav .next {
+            right: 0;
+        }
+
+        input:checked+.slide-container .slide {
+            opacity: 1;
+
+            transform: scale(1);
+
+            transition: opacity 1s ease-in-out;
+        }
+
+        input:checked+.slide-container .nav label {
+            display: block;
+        }
+
+        .nav-dots {
+            width: 100%;
+            bottom: 9px;
+            height: 11px;
+            display: block;
+            position: absolute;
+            text-align: center;
+        }
+
+        .nav-dots .nav-dot {
+            top: -5px;
+            width: 11px;
+            height: 11px;
+            margin: 0 4px;
+            position: relative;
+            border-radius: 100%;
+            display: inline-block;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .nav-dots .nav-dot:hover {
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        input#img-1:checked~.nav-dots label#img-dot-1,
+        input#img-2:checked~.nav-dots label#img-dot-2,
+        input#img-3:checked~.nav-dots label#img-dot-3,
+        input#img-4:checked~.nav-dots label#img-dot-4,
+        input#img-5:checked~.nav-dots label#img-dot-5,
+        input#img-6:checked~.nav-dots label#img-dot-6 {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        h3
+        {
+            color: rgb(12, 10, 10);
+        }
+    </style>
+</head>
+
+<body>
+    <header id="main_header">
+        <a href=""></a>
+        <div id="title">
+            <img src="https://upload3.inven.co.kr/upload/2020/12/11/bbs/i14536196944.png";
+             style="width : 800px"; min-width = 140px; alt="">
+        </div>
+        <nav id="main_gnb">
+            <ul>
+                <li><a href="https://store.steampowered.com/app/578080/PLAYERUNKNOWNS_BATTLEGROUNDS/?l=koreana"
+                        target="_blank"><img src="200px-Steam_Logo.png" alt="" width="20px" title="Stream"></a></li>
+                <li><a href="http://bit.ly/2UjASbf" target="_blank"><img src="smilegate.png" alt="" width="20px"
+                            title="Lost_Ark"></a></li>
+            </ul>
+        </nav>
+        <nav id="main_lnb">
+            <ul>
+                <li><a href="http://bit.ly/LostArk_FB" target="_blank" title="facebook"><img
+                            src="icons8_facebook_48px.png" alt="" width="30px" height="30px"></a></li>
+                <li><a href="https://www.twitch.tv/directory/game/LOST%20ARK?lang=ko" target="_blank" title="twitch"><img
+                            src="icons8_twitch_48px.png" alt="" width="30px" height="30px"></a></li>
+                <li><a href="https://twitter.com/playlostark" target="_blank" title="twitter"><img
+                            src="icons8_twitter_48px.png" alt="" width="30px" height="30px"></a></li>
+                <li><a href="http://bit.ly/LostArk_Youtube" target="_blank" title="youtube"><img
+                            src="icons8_play_button_48px.png" alt="" width="30px" height="30px"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="content" style="margin-top: 30px;">
+        <section id="main_section">
+            <article class="main_article">
+                <h1>소개</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, at..</p>
+            </article>
+            <article class="main_article">
+                <h1>공식 트레일러</h1>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/rpl1wcL8QsU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </article>
+            <article class="main_article">
+                <h1>공식 이미지</h1>
+                <ul class="slides">
+                    <input type="radio" name="radio-btn" id="img-1" checked />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="fighter.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-6" class="prev">&#x2039;</label>
+                            <label for="img-2" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+
+                    <input type="radio" name="radio-btn" id="img-2" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="magician.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-1" class="prev">&#x2039;</label>
+                            <label for="img-3" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+
+                    <input type="radio" name="radio-btn" id="img-3" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="gunner.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-2" class="prev">&#x2039;</label>
+                            <label for="img-1" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+
+
+                    <li class="nav-dots">
+                        <label for="img-1" class="nav-dot" id="img-dot-1"></label>
+                        <label for="img-2" class="nav-dot" id="img-dot-2"></label>
+                        <label for="img-3" class="nav-dot" id="img-dot-3"></label>
+
+                    </li>
+                </ul>
+
+            </article>
+        </section>
+        <aside id="main_aside">
+            <input type="radio" id="first" name="tab" checked="checked">
+            <input type="radio" id="second" name="tab">
+            <section class="buttons">
+                <label for="first">Magician</label>
+                <label for="second">Hunter</label>
+            </section>
+            <div class="tab_item">
+                <ul>
+                    <!-- (li>a[href=#]){$$}*4 -->
+                    <li class="item">
+                        <a href="https://namu.wiki/w/%EC%84%9C%EB%A8%B8%EB%84%88(%EB%A1%9C%EC%8A%A4%ED%8A%B8%EC%95%84%ED%81%AC)" target="_blank">
+                            <div class="thumbnail">
+                                <img src="summoner.png" alt="" width="45px" height="45px">
+                            </div>
+                            <div class="description">
+                                <strong>서머너</strong>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="https://namu.wiki/w/%EB%B0%94%EB%93%9C(%EB%A1%9C%EC%8A%A4%ED%8A%B8%EC%95%84%ED%81%AC)" target="_blank">
+                            <div class="thumbnail">
+                                <img src="bard.png" alt="" width="45px" height="45px">
+                            </div>
+                            <div class="description">
+                                <strong>바드</strong>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="https://namu.wiki/w/%EC%95%84%EB%A5%B4%EC%B9%B4%EB%82%98(%EB%A1%9C%EC%8A%A4%ED%8A%B8%EC%95%84%ED%81%AC)" target="_blank">
+                            <div class="thumbnail">
+                                <img src="arcanist.png" alt="" width="45px" height="45px">
+                            </div>
+                            <div class="description">
+                                <strong>아르카나</strong>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="https://namu.wiki/w/%EC%86%8C%EC%84%9C%EB%A6%AC%EC%8A%A4(%EB%A1%9C%EC%8A%A4%ED%8A%B8%EC%95%84%ED%81%AC)" target="_blank">
+                            <div class="thumbnail">
+                                <img src="sorceress.png" alt="" width="45px" height="45px">
+                            </div>
+                            <div class="description">
+                                <strong>소서리스</strong>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab_item">
+                <ul>
+                    <!-- (li>a[href=#]){$$}*4 -->
+                    <li class="item">
+                        <a href="https://namu.wiki/w/%EB%8D%B0%EB%B9%8C%ED%97%8C%ED%84%B0" target="_blank">
+                            <div class="thumbnail">
+                                <img src="deadeye.png" alt="" width="45px" height="45px">
+                            </div>
+                            <div class="description">
+                                <strong>데빌헌터</strong>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="https://namu.wiki/w/%EB%B8%94%EB%9E%98%EC%8A%A4%ED%84%B0(%EB%A1%9C%EC%8A%A4%ED%8A%B8%EC%95%84%ED%81%AC)" target="_blank">
+                            <div class="thumbnail">
+                                <img src="artillerist.png" alt="" width="45px" height="45px">
+                            </div>
+                            <div class="description">
+                                <strong>블래스터</strong>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="https://namu.wiki/w/%ED%98%B8%ED%81%AC%EC%95%84%EC%9D%B4(%EB%A1%9C%EC%8A%A4%ED%8A%B8%EC%95%84%ED%81%AC)" target="_blank">
+                            <div class="thumbnail">
+                                <img src="sharpshooter.png" alt="" width="45px" height="45px">
+                            </div>
+                            <div class="description">
+                                <strong>호크아이</strong>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="https://namu.wiki/w/%EC%8A%A4%EC%B9%B4%EC%9A%B0%ED%84%B0(%EB%A1%9C%EC%8A%A4%ED%8A%B8%EC%95%84%ED%81%AC)" target="_blank">
+                            <div class="thumbnail">
+                                <img src="machinist.png" alt="" width="45px" height="45px">
+                            </div>
+                            <div class="description">
+                                <strong>스카우터</strong>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <footer id="main_footer">        
+        <a href="https://store.steampowered.com/app/1599340/Lost_Ark/" target="_blank"><h3>LostArk Season2 꿈꾸지 않는 자들의 낙원</h3></a>          
+    </footer>
+    <br>
+</body>
+</html>
